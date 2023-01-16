@@ -10,6 +10,7 @@ Atente-se ao maven realizar o download das dependecias nele informadas. <br/>
 
 <h3>Dependencias</h3>
 
+* **Java 11**
 * **JSF**
 * **JPA/HIBERNATE**
 * **MySQL**
