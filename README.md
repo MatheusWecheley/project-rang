@@ -1,4 +1,4 @@
-# BACKEND-CHALLENGE-NODE
+# FULLSTACK-CHALLENGE-JAVA
 Resolução do desafio técnico - JAVA FullStack Developer
 
 ### Para correta instalação e execução desse projeto, é recomendada ter globalmente instalado Tomcat 8.5, IntelliJ, MySQL e Maven.
