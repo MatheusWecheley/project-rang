@@ -5,8 +5,18 @@ Resolução do desafio técnico - JAVA FullStack Developer
 
 ## Execução
 De imediato, utilize o IntelliJ como IDE para abrir o projeto, configure o Tomcat 8.5 para rodar o projeto web. Altere o arquivo 'persistence.xml' e coloque a conexão com o seu database.
-Atente-se ao maven realizar o download das dependecias nele informadas.
+Atente-se ao maven realizar o download das dependecias nele informadas. <br/>
 ![image](https://user-images.githubusercontent.com/100442318/212775098-7b1e29d8-3b1e-4f22-b288-fe4b5ac729ba.png)
+
+<h3>Dependencias</h3>
+
+* **JSF**
+* **JPA/HIBERNATE**
+* **MySQL**
+* **PrimeFaces**
+* **JUnit**
+
+
 # Documentação
 **Busca por CEP**
 ----
