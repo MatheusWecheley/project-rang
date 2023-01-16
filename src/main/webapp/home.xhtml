@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="WEB-INF/template/Layout.xhtml">
+    <ui:define name="tittle">
+        Busca por Unidades de Saúde Próximas
+    </ui:define>
+    <ui:define name="content">
+
+    <h:form id="form">
+        <p:messages id="messages" closable="true">
+        </p:messages>
+
+        <p:toolbar>
+            <f:facet name="left">
+                <p:inputText id="search" placeholder="Digite seu CEP para buscar" value="#{unidadeSaudeBean.cep}" size="30"/>
+                <p:commandButton value="Pesquisar" icon="fa fa-search" action="#{unidadeSaudeBean.findCEP()}" update="unidadesDT messages" process="@this search"/>
+            </f:facet>
+        </p:toolbar>
+
+        <p:spacer height="20px"/>
+        <p:dataTable id="unidadesDT" value="#{unidadeSaudeBean.listUnidadeSaude}"
+                     var="unidadeSaude"
+                     emptyMessage="Atualmente não há nenhuma unidade próxima!"
+                     paginator="true" rows="10" paginatorPosition="bottom"
+                     selectionMode="single" selection="#{unidadeSaudeBean.unidadeSaude}" rowKey="#{unidadeSaude.id}">
+            <p:column headerText="CNES" sortBy="#{unidadeSaude.CNES}">
+                <h:outputText value="#{unidadeSaude.CNES}"/>
+            </p:column>
+
+            <p:column headerText="Nome da Unidade"
+                      sortBy="#{unidadeSaude.nomeUnidade}">
+                <h:outputText value="#{unidadeSaude.nomeUnidade}"/>
+            </p:column>
+
+            <p:column headerText="CEP Inicio" sortBy="#{unidadeSaude.cepInicio}">
+                <h:outputText value="#{unidadeSaude.cepInicio}"/>
+            </p:column>
+
+            <p:column headerText="CEP Fim" sortBy="#{unidadeSaude.cepFim}">
+                <h:outputText value="#{unidadeSaude.cepFim}"/>
+            </p:column>
+
+        </p:dataTable>
+
+
+    </h:form>
+
+</ui:define>
+</ui:composition>

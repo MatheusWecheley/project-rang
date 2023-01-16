@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="WEB-INF/template/Layout.xhtml">
+    <ui:define name="tittle">
+        Cadastro de Unidades de Saúde
+    </ui:define>
+    <ui:define name="content">
+
+        <h:form id="form">
+
+
+
+            <p:messages id="messages" closable="true">
+            </p:messages>
+
+            <p:toolbar id="toolbar">
+                <f:facet name="left">
+                    <p:commandButton value="Nova Unidade" icon="pi pi-user-plus"
+                                     actionListener="#{unidadeSaudeBean.prepareUnidade}"
+                                     oncomplete="PF('unidadeDialogWidgetVar').show()"
+                                     update="unidadeDialog" process="@this">
+                        <p:resetInput target="unidadeDialog"/>
+                    </p:commandButton>
+
+                    <p:separator/>
+
+                    <p:commandButton value="Editar" title="Editar" icon="pi pi-pencil"
+                                     disabled="#{not unidadeSaudeBean.isUnidadeSelected}"
+                                     oncomplete="PF('unidadeDialogWidgetVar').show()"
+                                     update="unidadeDialog" process="@this">
+                        <p:resetInput target="unidadeDialog"/>
+                    </p:commandButton>
+                    <p:separator/>
+
+                    <p:commandButton value="Excluir" title="Excluir" icon="pi pi-trash"
+                                     disabled="#{not unidadeSaudeBean.isUnidadeSelected}"
+                                     actionListener="#{unidadeSaudeBean.remove()}"
+                                     update="messages unidadesDT toolbar"
+                                     process="@this">
+                        <p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+                                   message="Deseja mesmo excluir esta Unidade?"/>
+                    </p:commandButton>
+                    <p:confirmDialog global="true">
+                        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" />
+                    </p:confirmDialog>
+                    <p:separator/>
+
+                </f:facet>
+            </p:toolbar>
+
+            <p:spacer height="20px"/>
+            <p:dataTable id="unidadesDT" value="#{unidadeSaudeBean.listUnidadeSaude}"
+                         var="unidadeSaude"
+                         emptyMessage="Atualmente não há nenhuma unidade próxima!"
+                         paginator="true" rows="10" paginatorPosition="bottom"
+                         selectionMode="single" selection="#{unidadeSaudeBean.unidadeSaude}"
+                         rowKey="#{unidadeSaude.id}">
+
+                <p:ajax event="rowSelect" update="form:toolbar"/>
+
+                <p:ajax event="rowUnselect" update="form:toolbar"/>
+
+
+                <p:column headerText="CNES" sortBy="#{unidadeSaude.CNES}">
+                    <h:outputText value="#{unidadeSaude.CNES}"/>
+                </p:column>
+
+                <p:column headerText="Nome da Unidade"
+                          sortBy="#{unidadeSaude.nomeUnidade}">
+                    <h:outputText value="#{unidadeSaude.nomeUnidade}"/>
+                </p:column>
+
+                <p:column headerText="CEP Inicio" sortBy="#{unidadeSaude.cepInicio}">
+                    <h:outputText value="#{unidadeSaude.cepInicio}"/>
+                </p:column>
+
+                <p:column headerText="CEP Fim" sortBy="#{unidadeSaude.cepFim}">
+                    <h:outputText value="#{unidadeSaude.cepFim}"/>
+                </p:column>
+
+            </p:dataTable>
+
+
+            <p:dialog id="unidadeDialog" header="Nova Unidade de Saude"
+                      widgetVar="unidadeDialogWidgetVar" modal="true" resizable="false"
+                      closeOnEscape="true">
+                <p:messages id="dialogMessage" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+
+                <p:defaultCommand target="saveCommandButton" scope="unidadeDialog"/>
+
+                <p:panelGrid id="unidadesPG" columns="2" rendered="#{unidadeSaudeBean.unidadeSaude ne null}">
+                    <p:outputLabel value="Número CNES: " for="numeroCnes"/>
+                    <p:inputText id="numeroCnes" value="#{unidadeSaudeBean.unidadeSaude.CNES}"/>
+
+                    <p:outputLabel value="Nome da Unidade: " for="nomeUnidade"/>
+                    <p:inputText id="nomeUnidade" value="#{unidadeSaudeBean.unidadeSaude.nomeUnidade}"/>
+
+                    <p:outputLabel value="Números inicias do CEP: " for="numeroCepInicio"/>
+                    <p:inputText id="numeroCepInicio" value="#{unidadeSaudeBean.unidadeSaude.cepInicio}"/>
+
+                    <p:outputLabel value="Números finais do CEP: " for="numeroCepFim"/>
+                    <p:inputText id="numeroCepFim" value="#{unidadeSaudeBean.unidadeSaude.cepFim}"/>
+
+                </p:panelGrid>
+
+                <p:commandButton id="saveCommandButton" value="Salvar" actionListener="#{unidadeSaudeBean.save()}"
+                                 update="unidadesPG dialogMessage"
+                                 oncomplete="if (!args.validationFailed) PF('unidadeDialogWidgetVar').hide()"
+                                 process="unidadeDialog"/>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
